@@ -76,7 +76,7 @@ app.put('/updatelink/:id', async (req, res) => {
 
     const updatedLink = await Link.findByIdAndUpdate(
       id,
-      { url, updatedAt: Date.now },
+      { url, updatedAt: Date.now() },
       { new: true, runValidators: true }
     );
 
