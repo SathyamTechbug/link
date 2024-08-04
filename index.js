@@ -55,7 +55,7 @@ app.post('/createlink', async (req, res) => {
 
     const foundLink = await Link.findOne({ url: url });
 
-    if (foundLink) return res.json({ id: foundLink.id });
+    if (foundLink) return res.json(foundLink);
 
     const newLink = await Link.create({ url });
 
