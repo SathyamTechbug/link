@@ -75,7 +75,7 @@ app.put('/updatelink/:id', async (req, res) => {
 
     const updatedLink = await Link.findByIdAndUpdate(
       id,
-      { url },
+      { url, updatedAt: Date.now },
       { new: true, runValidators: true }
     );
 
@@ -98,7 +98,7 @@ app.delete('/deletelink/:id', async (req, res) => {
 
     await Link.findByIdAndDelete(id);
 
-    res.status(204).json({ message: 'Link deleted successfully' });
+    res.status(204).json();
   } catch (error) {}
 });
 
