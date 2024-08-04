@@ -2,6 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const logger = require('./middleware/logEvents');
 const Link = require('./model/link');
 
 const PORT = 8080;
@@ -11,6 +12,8 @@ app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+app.use(logger);
 
 app.get('/', (req, res) => res.end('You are at right place'));
 
