@@ -17,11 +17,27 @@ app.use(logger);
 
 app.get('/', (req, res) => res.end('You are at right place'));
 
+app.get('/getall', async (req, res) => {
+  try {
+    const links = await Link.find();
+
+    if (!links) return res.status(404).json({ message: 'URLs not found' });
+
+    res.json(links);
+  } catch (error) {
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.post('/createlink', async (req, res) => {
   try {
     const { url } = req.body;
 
     if (!url) return res.status(400).json({ message: 'URL is required' });
+
+    const foundLink = await Link.findOne({ url: url });
+
+    if (foundLink) return res.json({ id: foundLink.id });
 
     const newLink = await Link.create({ url });
 
@@ -68,6 +84,22 @@ app.put('/updatelink/:id', async (req, res) => {
     console.log(error);
     res.status(500).json({ error: 'Internal server error' });
   }
+});
+
+app.delete('/deletelink/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id.length) return res.status(400).json({ message: 'ID is required' });
+
+    const foundLink = await Link.findById(id);
+
+    if (!foundLink) return res.status(404).json({ message: 'URL not found' });
+
+    await Link.findByIdAndDelete(id);
+
+    res.status(204).json({ message: 'Link deleted successfully' });
+  } catch (error) {}
 });
 
 mongoose.connect(`${process.env.DB_URI}`).then(() => {
