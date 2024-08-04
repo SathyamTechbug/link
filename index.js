@@ -29,6 +29,23 @@ app.get('/getall', async (req, res) => {
   }
 });
 
+app.get('/getlink/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id.length) return res.status(400).json({ message: 'ID is required' });
+
+    const foundLink = await Link.findById(id);
+
+    if (!foundLink) return res.status(404).json({ message: 'URL not found' });
+
+    res.json(foundLink);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 app.post('/createlink', async (req, res) => {
   try {
     const { url } = req.body;
@@ -42,23 +59,6 @@ app.post('/createlink', async (req, res) => {
     const newLink = await Link.create({ url });
 
     res.json(newLink);
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-app.post('/getlink/:id', async (req, res) => {
-  try {
-    const { id } = req.params;
-
-    if (!id.length) return res.status(400).json({ message: 'ID is required' });
-
-    const foundLink = await Link.findById(id);
-
-    if (!foundLink) return res.status(404).json({ message: 'URL not found' });
-
-    res.json(foundLink);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal server error' });
