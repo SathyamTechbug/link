@@ -25,6 +25,7 @@ app.get('/getall', async (req, res) => {
 
     res.json(links);
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
@@ -99,7 +100,10 @@ app.delete('/deletelink/:id', async (req, res) => {
     await Link.findByIdAndDelete(id);
 
     res.status(204).json();
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
 });
 
 mongoose.connect(`${process.env.DB_URI}`).then(() => {
