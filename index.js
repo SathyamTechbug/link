@@ -41,24 +41,24 @@ app.post('/createlink', async (req, res) => {
 
     const newLink = await Link.create({ url });
 
-    res.json({ id: newLink.id });
+    res.json(newLink);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-app.post('/getlink', async (req, res) => {
+app.post('/getlink/:id', async (req, res) => {
   try {
-    const { id } = req.body;
+    const { id } = req.params;
 
     if (!id.length) return res.status(400).json({ message: 'ID is required' });
 
-    const foundedLink = await Link.findById(id);
+    const foundLink = await Link.findById(id);
 
-    if (!foundedLink) return res.status(404).json({ message: 'URL not found' });
+    if (!foundLink) return res.status(404).json({ message: 'URL not found' });
 
-    res.json({ url: foundedLink.url });
+    res.json(foundLink);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal server error' });
@@ -79,7 +79,7 @@ app.put('/updatelink/:id', async (req, res) => {
       { new: true, runValidators: true }
     );
 
-    res.json({ id: updatedLink.id, url: updatedLink.url });
+    res.json(updatedLink);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal server error' });
