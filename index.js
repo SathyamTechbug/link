@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const logger = require('./middleware/logEvents');
+const { logger } = require('./middleware/logEvents');
 const Link = require('./model/link');
 
 const PORT = 8080;
@@ -25,7 +25,7 @@ app.post('/createlink', async (req, res) => {
 
     const newLink = await Link.create({ url });
 
-    res.json(newLink.id);
+    res.json({ id: newLink.id });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal server error' });
@@ -42,7 +42,7 @@ app.post('/getlink', async (req, res) => {
 
     if (!foundedLink) return res.status(404).json({ message: 'URL not found' });
 
-    res.json(foundedLink.url);
+    res.json({ url: foundedLink.url });
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal server error' });
