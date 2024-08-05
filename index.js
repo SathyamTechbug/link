@@ -5,7 +5,7 @@ const cors = require('cors');
 const { logger } = require('./middleware/logEvents');
 const Link = require('./model/link');
 
-const PORT = 8080;
+const PORT = 8000;
 const app = express();
 
 app.use(cors());
@@ -40,7 +40,7 @@ app.get('/getlink/:id', async (req, res) => {
 
     if (!foundLink) return res.status(404).json({ message: 'URL not found' });
 
-    res.json(foundLink);
+    res.redirect(foundLink.url);
   } catch (error) {
     console.log(error);
     res.status(500).json({ error: 'Internal server error' });
