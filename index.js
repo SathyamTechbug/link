@@ -5,7 +5,7 @@ const cors = require('cors');
 const { logger } = require('./middleware/logEvents');
 const Link = require('./model/link');
 
-const PORT = 8000;
+const PORT = process.env.PORT;
 const app = express();
 
 app.use(cors());
