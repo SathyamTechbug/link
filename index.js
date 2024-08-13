@@ -3,8 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const { logger } = require('./middleware/logEvents');
-const linkRoutes = require('./routes/linkRoutes');
-const contactRoutes = require('./routes/contactRoutes');
+const linkRoutes = require('./routes/linkRoute');
+const contactRoutes = require('./routes/contactRoute');
 
 const PORT = process.env.PORT;
 const app = express();
