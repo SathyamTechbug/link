@@ -14,8 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(logger);
 
-app.get('/', (req, res) => res.end('You are at right place'));
-app.use('/link', linkRoutes);
+app.use('/', linkRoutes);
 app.use('/contact', contactRoutes);
 
 mongoose.connect(`${process.env.DB_URI}`).then(() => {

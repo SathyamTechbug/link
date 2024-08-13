@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const linkController = require('../controllers/linkController');
 
-router.get('/', linkController.getAllLinks);
-router.post('/', linkController.createLink);
-router.get('/:id', linkController.getLinkById);
-router.put('/:id', linkController.updateLink);
-router.delete('/:id', linkController.deleteLink);
+router.get('/getAll', linkController.getAllLinks);
+router.post('/createLink', linkController.createLink);
+router.get('/getLinkById/:id', linkController.getLinkById);
+router.put('/updateLink/:id', linkController.updateLink);
+router.delete('/deleteLink/:id', linkController.deleteLink);
 
 module.exports = router;
